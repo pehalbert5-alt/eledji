@@ -115,6 +115,14 @@ window.addEventListener('DOMContentLoaded', () => {
    * @param {string} viewId L'ID de la vue à afficher.
    */
   const navigateTo = (viewId) => {
+    // Gérer le padding pour le mode plein écran
+    if (viewId === 'home-view') {
+      appMain.style.padding = '0';
+    } else {
+      // Rétablir le padding pour les autres vues
+      appMain.style.padding = '2rem 2rem 80px 2rem';
+    }
+
     // Cacher toutes les vues
     document.querySelectorAll('.view').forEach(view => view.classList.add('hidden'));
     // Afficher la vue sélectionnée
