@@ -84,6 +84,32 @@ window.addEventListener('DOMContentLoaded', () => {
     navigateTo('account-view'); // Afficher la vue du compte par défaut
   };
 
+  // --- Logique du flux vidéo ---
+  const videoObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      const video = entry.target;
+      if (entry.isIntersecting) {
+        video.play().catch(e => console.error("Erreur de lecture auto:", e));
+      } else {
+        video.pause();
+      }
+    });
+  }, { threshold: 0.5 }); // Se déclenche quand 50% de la vidéo est visible
+
+  document.querySelectorAll('.post-media').forEach(video => {
+    videoObserver.observe(video);
+    // Activer/désactiver le son au clic
+    video.addEventListener('click', () => {
+      video.muted = !video.muted;
+    });
+  });
+
+  document.querySelectorAll('.like-btn').forEach(btn => {
+    btn.addEventListener('click', () => alert('Vous avez aimé cette publication !'));
+  });
+  document.querySelectorAll('.comment-btn').forEach(btn => {
+    btn.addEventListener('click', () => alert('Ouverture des commentaires...'));
+  });
   /**
    * Gère la navigation entre les vues.
    * @param {string} viewId L'ID de la vue à afficher.
@@ -144,8 +170,9 @@ window.addEventListener('DOMContentLoaded', () => {
 
   if (publishBtn) {
     publishBtn.addEventListener('click', () => {
-      alert("Ouverture de l'interface de publication...");
       toggleModal(); // Ferme le modal
+      // Navigue vers la nouvelle vue de publication
+      navigateTo('publish-view');
     });
   }
 
@@ -162,6 +189,34 @@ window.addEventListener('DOMContentLoaded', () => {
       const file = event.target.files[0];
       if (file) {
         profilePicPreview.src = URL.createObjectURL(file);
+      }
+    });
+  }
+
+  // Gérer la soumission du formulaire de publication
+  const publishForm = document.getElementById('publish-form');
+  if (publishForm) {
+    publishForm.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const videoFile = publishForm.querySelector('#video-file').files[0];
+      const user = auth.currentUser;
+
+      if (!videoFile || !user) {
+        alert("Veuillez sélectionner une vidéo et être connecté.");
+        return;
+      }
+
+      try {
+        // Logique de téléversement de la vidéo et de création du post dans Firestore
+        // Pour l'instant, nous affichons une alerte de succès
+        console.log(`Publication en cours par ${user.uid}:`, { videoName: videoFile.name });
+        alert("Vidéo en cours de publication !");
+
+        // Revenir à la page d'accueil après la soumission
+        navigateTo('home-view');
+      } catch (error) {
+        console.error("Erreur lors de la publication:", error);
+        alert(`Erreur: ${error.message}`);
       }
     });
   }
