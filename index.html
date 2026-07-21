@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>eledji</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="splash" class="splash">
+    <div class="splash-content">
+      <h1>Bienvenue sur KARTY</h1>
+      <button id="start-btn" class="start-btn">Commencer</button>
+    </div>
+  </div>
+
+  <main id="app" class="hidden">
+    <div class="registration-container">
+      <form id="registration-form">
+        <h2>Créer un compte</h2>
+        <div class="profile-pic-selector">
+          <label for="profile-pic-input">
+            <img id="profile-pic-preview" src="https://ssl.gstatic.com/images/branding/product/1x/avatar_circle_blue_120dp.png" alt="Aperçu de la photo de profil">
+            <span>Choisir une photo</span>
+          </label>
+          <input type="file" id="profile-pic-input" name="profile-pic" accept="image/*" class="hidden">
+        </div>
+        <div class="form-group">
+          <label for="username">Nom d'utilisateur</label>
+          <input type="text" id="username" name="username" placeholder="Votre pseudo" required>
+        </div>
+        <button type="submit" class="btn-primary">Continuer</button>
+        <div class="separator">
+          <span>OU</span>
+        </div>
+        <button type="button" id="google-signin-btn" class="btn-secondary">
+          Continuer avec Google</button>
+      </form>
+    </div>
+
+    <div id="main-content" class="hidden">
+      <!-- Le contenu principal de l'application s'affichera ici après l'inscription -->
+    </div>
+
+  </main>
+
+  <!-- SDK Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-storage-compat.js"></script>
+
+  <script src="app.js"></script>
+</body>
+</html>
