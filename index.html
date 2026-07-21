@@ -42,12 +42,21 @@
       <!-- Le contenu principal de l'application s'affichera ici après l'inscription -->
     </div>
 
+    <nav id="bottom-nav" class="bottom-nav hidden">
+      <button class="nav-btn">🏠<span class="nav-label">Accueil</span></button>
+      <button class="nav-btn">🔍<span class="nav-label">Découvrir</span></button>
+      <button class="nav-btn add-btn">➕</button>
+      <button class="nav-btn">💬<span class="nav-label">Message</span></button>
+      <button class="nav-btn active">👤<span class="nav-label">Compte</span></button>
+    </nav>
+
   </main>
 
   <!-- SDK Firebase -->
   <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-storage-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore-compat.js"></script>
 
   <script src="app.js"></script>
 </body>

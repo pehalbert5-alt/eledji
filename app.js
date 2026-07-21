@@ -8,6 +8,7 @@ window.addEventListener('DOMContentLoaded', () => {
   const registrationContainer = document.querySelector('.registration-container');
   const googleSignInBtn = document.getElementById('google-signin-btn');
   const mainContent = document.getElementById('main-content');
+  const bottomNav = document.getElementById('bottom-nav');
 
   // --- Configuration Firebase ---
   const firebaseConfig = {
@@ -24,6 +25,7 @@ window.addEventListener('DOMContentLoaded', () => {
   firebase.initializeApp(firebaseConfig);
   const auth = firebase.auth();
   const storage = firebase.storage();
+  const db = firebase.firestore();
 
   // --- Gestion de l'état d'authentification ---
   auth.onAuthStateChanged((user) => {
@@ -46,6 +48,7 @@ window.addEventListener('DOMContentLoaded', () => {
    */
   const showUserProfile = (user) => {
     // Cacher le formulaire d'inscription
+    appMain.style.alignItems = 'flex-start'; // Aligne le contenu en haut
     registrationContainer?.classList.add('hidden');
 
     // Afficher le contenu principal avec les infos de l'utilisateur
@@ -54,9 +57,26 @@ window.addEventListener('DOMContentLoaded', () => {
         <div class="profile-view">
           <img src="${user.photoURL || 'https://ssl.gstatic.com/images/branding/product/1x/avatar_circle_blue_120dp.png'}" alt="Photo de profil de ${user.displayName}">
           <h2>Bienvenue, ${user.displayName} !</h2>
+          <button id="logout-btn" class="logout-btn">Se déconnecter</button>
         </div>
       `;
       mainContent.classList.remove('hidden');
+      bottomNav?.classList.remove('hidden');
+
+      // Gérer la déconnexion
+      const logoutBtn = document.getElementById('logout-btn');
+      if (logoutBtn) {
+        logoutBtn.addEventListener('click', async () => {
+          try {
+            await auth.signOut();
+            console.log('Utilisateur déconnecté.');
+            // Recharger la page pour revenir à l'écran d'accueil
+            location.reload();
+          } catch (error) {
+            console.error('Erreur de déconnexion:', error);
+          }
+        });
+      }
     }
   };
 
@@ -111,6 +131,14 @@ window.addEventListener('DOMContentLoaded', () => {
           photoURL: photoURL
         });
 
+        // 4. Créer un document utilisateur dans Firestore
+        await db.collection('users').doc(user.uid).set({
+          uid: user.uid,
+          displayName: username,
+          photoURL: photoURL,
+          createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+
         console.log('Utilisateur créé et profil mis à jour:', user);
         showUserProfile(user);
       } catch (error) {
@@ -128,6 +156,16 @@ window.addEventListener('DOMContentLoaded', () => {
         const result = await auth.signInWithPopup(provider);
         const user = result.user;
         console.log('Utilisateur connecté avec Google:', user);
+
+        // Si c'est un nouvel utilisateur, créer son document dans Firestore
+        if (result.additionalUserInfo.isNewUser) {
+          await db.collection('users').doc(user.uid).set({
+            uid: user.uid,
+            displayName: user.displayName,
+            photoURL: user.photoURL,
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+          });
+        }
         showUserProfile(user);
       } catch (error) {
         console.error("Erreur lors de la connexion avec Google:", error);
