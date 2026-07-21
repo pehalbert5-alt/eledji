@@ -246,21 +246,14 @@ input[type="file"] {
   background: none;
   border: none;
   color: #9ca3af; /* Gris pour les inactifs */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  font-size: 1.5rem;
+  font-size: 0.9rem;
+  font-weight: 500;
   cursor: pointer;
   transition: color 0.2s ease;
 }
 
 .nav-btn:hover { color: #fff; }
 .nav-btn.active { color: #fff; } /* Blanc pour l'actif */
-
-.nav-label {
-  font-size: 0.65rem;
-  margin-top: 2px;
-}
 
 .add-btn {
   font-size: 2rem;
