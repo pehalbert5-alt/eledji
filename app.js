@@ -215,10 +215,29 @@ window.addEventListener('DOMContentLoaded', () => {
       }
 
       try {
-        // Logique de téléversement de la vidéo et de création du post dans Firestore
-        // Pour l'instant, nous affichons une alerte de succès
-        console.log(`Publication en cours par ${user.uid}:`, { videoName: videoFile.name });
+        // --- Logique de téléversement vers Cloudinary ---
+        const cloudName = 'dxvxmquvu';
+        const uploadPreset = 'eledji';
+
+        const formData = new FormData();
+        formData.append('file', videoFile);
+        formData.append('upload_preset', uploadPreset);
+
         alert("Vidéo en cours de publication !");
+
+        const response = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/video/upload`, {
+          method: 'POST',
+          body: formData
+        });
+        const data = await response.json();
+        const videoUrl = data.secure_url;
+
+        // Sauvegarder les informations de la publication dans Firestore
+        await db.collection('posts').add({
+          videoUrl: videoUrl,
+          authorId: user.uid,
+          createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
 
         // Revenir à la page d'accueil après la soumission
         navigateTo('home-view');
