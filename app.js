@@ -51,17 +51,16 @@ window.addEventListener('DOMContentLoaded', () => {
     appMain.style.alignItems = 'flex-start'; // Aligne le contenu en haut
     registrationContainer?.classList.add('hidden');
 
-    // Afficher le contenu principal avec les infos de l'utilisateur
-    if (mainContent) {
-      mainContent.innerHTML = `
+    // Injecter le profil dans la vue "Compte"
+    const accountView = document.getElementById('account-view');
+    if (accountView) {
+      accountView.innerHTML = `
         <div class="profile-view">
           <img src="${user.photoURL || 'https://ssl.gstatic.com/images/branding/product/1x/avatar_circle_blue_120dp.png'}" alt="Photo de profil de ${user.displayName}">
           <h2>Bienvenue, ${user.displayName} !</h2>
           <button id="logout-btn" class="logout-btn">Se déconnecter</button>
         </div>
       `;
-      mainContent.classList.remove('hidden');
-      bottomNav?.classList.remove('hidden');
 
       // Gérer la déconnexion
       const logoutBtn = document.getElementById('logout-btn');
@@ -78,6 +77,31 @@ window.addEventListener('DOMContentLoaded', () => {
         });
       }
     }
+
+    // Afficher le contenu principal et la navigation
+    mainContent.classList.remove('hidden');
+    bottomNav?.classList.remove('hidden');
+    navigateTo('account-view'); // Afficher la vue du compte par défaut
+  };
+
+  /**
+   * Gère la navigation entre les vues.
+   * @param {string} viewId L'ID de la vue à afficher.
+   */
+  const navigateTo = (viewId) => {
+    // Cacher toutes les vues
+    document.querySelectorAll('.view').forEach(view => view.classList.add('hidden'));
+    // Afficher la vue sélectionnée
+    document.getElementById(viewId)?.classList.remove('hidden');
+
+    // Mettre à jour l'état actif des boutons de navigation
+    document.querySelectorAll('.nav-btn[data-view]').forEach(btn => {
+      if (btn.dataset.view === viewId) {
+        btn.classList.add('active');
+      } else {
+        btn.classList.remove('active');
+      }
+    });
   };
 
   // Fonction pour afficher l'application
@@ -92,6 +116,13 @@ window.addEventListener('DOMContentLoaded', () => {
 
   // Si l'utilisateur clique sur le bouton, on affiche l'app tout de suite
   startBtn?.addEventListener('click', showApp);
+
+  // Ajouter les écouteurs d'événements pour la navigation
+  document.querySelectorAll('.nav-btn[data-view]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      navigateTo(btn.dataset.view);
+    });
+  });
 
   // Gérer l'aperçu de la photo de profil
   if (profilePicInput && profilePicPreview) {

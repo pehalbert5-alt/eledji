@@ -265,3 +265,8 @@ input[type="file"] {
   justify-content: center;
   align-items: center;
 }
+
+/* Style de base pour les vues */
+.view {
+  width: 100%;
+}

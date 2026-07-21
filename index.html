@@ -39,15 +39,21 @@
     </div>
 
     <div id="main-content" class="hidden">
-      <!-- Le contenu principal de l'application s'affichera ici après l'inscription -->
+      <!-- Vues de l'application -->
+      <div id="home-view" class="view hidden"><h2>Accueil</h2><p>Contenu de la page d'accueil.</p></div>
+      <div id="discover-view" class="view hidden"><h2>Découvrir</h2><p>Contenu de la page Découvrir.</p></div>
+      <div id="messages-view" class="view hidden"><h2>Messages</h2><p>Contenu de la page des messages.</p></div>
+      <div id="account-view" class="view">
+        <!-- Le profil de l'utilisateur sera injecté ici par JS -->
+      </div>
     </div>
 
     <nav id="bottom-nav" class="bottom-nav hidden">
-      <button class="nav-btn">🏠<span class="nav-label">Accueil</span></button>
-      <button class="nav-btn">🔍<span class="nav-label">Découvrir</span></button>
+      <button class="nav-btn" data-view="home-view">🏠<span class="nav-label">Accueil</span></button>
+      <button class="nav-btn" data-view="discover-view">🔍<span class="nav-label">Découvrir</span></button>
       <button class="nav-btn add-btn">➕</button>
-      <button class="nav-btn">💬<span class="nav-label">Message</span></button>
-      <button class="nav-btn active">👤<span class="nav-label">Compte</span></button>
+      <button class="nav-btn" data-view="messages-view">💬<span class="nav-label">Message</span></button>
+      <button class="nav-btn active" data-view="account-view">👤<span class="nav-label">Compte</span></button>
     </nav>
 
   </main>
