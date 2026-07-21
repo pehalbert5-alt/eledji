@@ -205,4 +205,21 @@ window.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Device mockup navigation: handle device nav buttons
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('.device-bottom-nav .nav-btn');
+    if (btn) {
+      const view = btn.dataset.view;
+      if (view) {
+        // hide all device views
+        document.querySelectorAll('.phone .view').forEach(v => v.classList.add('hidden'));
+        document.getElementById(view)?.classList.remove('hidden');
+      }
+    }
+    const fab = e.target.closest('.device-bottom-nav .fab');
+    if (fab) {
+      alert('Action centrale déclenchée');
+    }
+  });
+
 });

@@ -37,24 +37,44 @@
           Continuer avec Google</button>
       </form>
     </div>
-
     <div id="main-content" class="hidden">
-      <!-- Vues de l'application -->
-      <div id="home-view" class="view hidden"><h2>Accueil</h2><p>Contenu de la page d'accueil.</p></div>
-      <div id="discover-view" class="view hidden"><h2>Découvrir</h2><p>Contenu de la page Découvrir.</p></div>
-      <div id="messages-view" class="view hidden"><h2>Messages</h2><p>Contenu de la page des messages.</p></div>
-      <div id="account-view" class="view">
-        <!-- Le profil de l'utilisateur sera injecté ici par JS -->
+      <!-- Mockup device to match design -->
+      <div class="device-mockup">
+        <div class="phone">
+          <header class="phone-header">
+            <button class="back-btn">←</button>
+            <div class="title">Eledji com.</div>
+          </header>
+
+          <section class="phone-screen">
+            <div id="home-view" class="view active">
+              <div class="media">
+                <img src="IMG-20250215-WA0090.jpg" alt="Contenu" />
+                <div class="right-actions">
+                  <button class="action">♡</button>
+                  <button class="action">💬</button>
+                  <button class="action">⤴</button>
+                </div>
+              </div>
+            </div>
+
+            <div id="discover-view" class="view hidden"><h2>Découvrir</h2></div>
+            <div id="messages-view" class="view hidden"><h2>Messages</h2></div>
+            <div id="account-view" class="view hidden">
+              <!-- Le profil de l'utilisateur sera injecté ici par JS -->
+            </div>
+          </section>
+
+          <nav id="device-bottom-nav" class="device-bottom-nav">
+            <button class="nav-btn" data-view="home-view">Accueil</button>
+            <button class="nav-btn" data-view="discover-view">Découvrir</button>
+            <button class="fab">+</button>
+            <button class="nav-btn" data-view="messages-view">Messages</button>
+            <button class="nav-btn" data-view="account-view">Compte</button>
+          </nav>
+        </div>
       </div>
     </div>
-
-    <nav id="bottom-nav" class="bottom-nav hidden">
-      <button class="nav-btn" data-view="home-view">🏠<span class="nav-label">Accueil</span></button>
-      <button class="nav-btn" data-view="discover-view">🔍<span class="nav-label">Découvrir</span></button>
-      <button class="nav-btn add-btn">➕</button>
-      <button class="nav-btn" data-view="messages-view">💬<span class="nav-label">Message</span></button>
-      <button class="nav-btn active" data-view="account-view">👤<span class="nav-label">Compte</span></button>
-    </nav>
 
   </main>
 
