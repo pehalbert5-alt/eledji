@@ -122,6 +122,22 @@ window.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  // Gérer l'ouverture et la fermeture du modal '+'
+  const addBtn = document.querySelector('.add-btn');
+  const addModal = document.getElementById('add-modal');
+  const closeModalBtn = document.getElementById('close-modal-btn');
+
+  const toggleModal = () => addModal?.classList.toggle('hidden');
+
+  if (addBtn && addModal) {
+    addBtn.addEventListener('click', toggleModal);
+  }
+  if (closeModalBtn) {
+    closeModalBtn.addEventListener('click', toggleModal);
+  }
+  // Fermer le modal en cliquant sur l'arrière-plan
+  addModal?.addEventListener('click', (e) => e.target === addModal && toggleModal());
+
   // Gérer l'aperçu de la photo de profil
   if (profilePicInput && profilePicPreview) {
     profilePicInput.addEventListener('change', (event) => {
