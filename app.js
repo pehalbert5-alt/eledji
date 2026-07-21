@@ -8,7 +8,6 @@ window.addEventListener('DOMContentLoaded', () => {
   const registrationContainer = document.querySelector('.registration-container');
   const googleSignInBtn = document.getElementById('google-signin-btn');
   const mainContent = document.getElementById('main-content');
-  const bottomNav = document.getElementById('bottom-nav');
 
   // --- Configuration Firebase ---
   const firebaseConfig = {
@@ -32,8 +31,7 @@ window.addEventListener('DOMContentLoaded', () => {
     if (user) {
       // L'utilisateur est connecté. On affiche directement son profil.
       console.log("Utilisateur déjà connecté:", user.displayName);
-      splashScreen?.classList.add('hidden'); // Cacher l'écran de bienvenue
-      appMain?.classList.remove('hidden'); // Afficher la zone principale
+      splashScreen?.classList.add('hidden');
       showUserProfile(user);
     } else {
       // L'utilisateur n'est pas connecté.
@@ -48,7 +46,6 @@ window.addEventListener('DOMContentLoaded', () => {
    */
   const showUserProfile = (user) => {
     // Cacher le formulaire d'inscription
-    appMain.style.alignItems = 'flex-start'; // Aligne le contenu en haut
     registrationContainer?.classList.add('hidden');
 
     // Injecter le profil dans la vue "Compte"
@@ -79,9 +76,7 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 
     // Afficher le contenu principal et la navigation
-    mainContent.classList.remove('hidden');
-    bottomNav?.classList.remove('hidden');
-    navigateTo('account-view'); // Afficher la vue du compte par défaut
+    navigateTo('home-view'); // Afficher la vue d'accueil par défaut
   };
 
   /**
@@ -90,11 +85,11 @@ window.addEventListener('DOMContentLoaded', () => {
    */
   const navigateTo = (viewId) => {
     // Cacher toutes les vues
-    document.querySelectorAll('.view').forEach(view => view.classList.add('hidden'));
+    document.querySelectorAll('.phone-screen .view').forEach(view => view.classList.add('hidden'));
     // Afficher la vue sélectionnée
     document.getElementById(viewId)?.classList.remove('hidden');
 
-    // Mettre à jour l'état actif des boutons de navigation
+    // Mettre à jour l'état actif des boutons de navigation (non implémenté pour le mockup)
     document.querySelectorAll('.nav-btn[data-view]').forEach(btn => {
       if (btn.dataset.view === viewId) {
         btn.classList.add('active');
@@ -107,22 +102,13 @@ window.addEventListener('DOMContentLoaded', () => {
   // Fonction pour afficher l'application
   const showApp = () => {
     if (splashScreen) {
-      splashScreen.classList.add('hidden');
-    }
-    if (appMain) {
-      appMain.classList.remove('hidden');
+      splashScreen.classList.add('hidden'); // Cacher l'écran de bienvenue
+      registrationContainer.classList.remove('hidden'); // Afficher le formulaire
     }
   };
 
   // Si l'utilisateur clique sur le bouton, on affiche l'app tout de suite
   startBtn?.addEventListener('click', showApp);
-
-  // Ajouter les écouteurs d'événements pour la navigation
-  document.querySelectorAll('.nav-btn[data-view]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      navigateTo(btn.dataset.view);
-    });
-  });
 
   // Gérer l'aperçu de la photo de profil
   if (profilePicInput && profilePicPreview) {
@@ -206,20 +192,11 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 
   // Device mockup navigation: handle device nav buttons
-  document.addEventListener('click', (e) => {
-    const btn = e.target.closest('.device-bottom-nav .nav-btn');
-    if (btn) {
-      const view = btn.dataset.view;
-      if (view) {
-        // hide all device views
-        document.querySelectorAll('.phone .view').forEach(v => v.classList.add('hidden'));
-        document.getElementById(view)?.classList.remove('hidden');
-      }
-    }
-    const fab = e.target.closest('.device-bottom-nav .fab');
-    if (fab) {
-      alert('Action centrale déclenchée');
-    }
+  document.querySelectorAll('.device-bottom-nav .nav-btn[data-view]').forEach(btn => {
+    btn.addEventListener('click', () => navigateTo(btn.dataset.view));
+  });
+  document.querySelector('.device-bottom-nav .fab')?.addEventListener('click', () => {
+    alert('Action centrale déclenchée');
   });
 
 });

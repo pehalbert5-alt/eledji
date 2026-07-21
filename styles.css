@@ -7,13 +7,9 @@
 
 body {
   font-family: system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
-  color: #fff;
-  background-color: #111;
-  /* Utiliser l'image du dossier assets */
-  background-image: url('IMG-20250215-WA0090.jpg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  /* Un fond simple pour mettre en valeur la maquette */
+  background-color: #374151;
+  color: #1f2937;
   min-height: 100vh;
 }
 
@@ -26,20 +22,19 @@ body {
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  /* Espace pour la barre de navigation en bas */
-  padding: 2rem 2rem 80px 2rem;
 }
 
 /* Écran de bienvenue (Splash) */
 .splash {
-  position: fixed;
-  inset: 0; /* top, right, bottom, left = 0 */
+  position: absolute;
+  inset: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   background: rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(5px);
   z-index: 10;
+  color: #fff;
 }
 
 /* Device mockup */
@@ -91,8 +86,14 @@ body {
 .device-bottom-nav .fab { width:64px; height:64px; border-radius:50%; background:#fff; color:#111; border:none; font-size:1.8rem; transform:translateY(-20%); box-shadow:0 6px 18px rgba(2,6,23,0.4) }
 
 /* Make registration container overlay the mockup when shown */
-.registration-container { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 50 }
-
+.registration-container {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
 .splash-content {
   display: flex;
@@ -105,6 +106,7 @@ body {
   font-weight: 700;
   text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
   text-align: center;
+  color: #fff;
 }
 
 .start-btn {
@@ -159,6 +161,7 @@ body {
   backdrop-filter: blur(8px);
   padding: 28px 32px;
   border-radius: 12px;
+  color: #fff;
   width: 100%;
   max-width: 400px;
   border: 1px solid rgba(255, 255, 255, 0.1);
@@ -168,6 +171,7 @@ body {
   text-align: center;
   margin-bottom: 20px;
   font-size: 1.8rem;
+  color: #fff;
 }
 
 .form-group { margin-bottom: 16px; }
@@ -175,6 +179,7 @@ body {
 .form-group label {
   display: block;
   margin-bottom: 6px;
+  color: #fff;
   font-weight: 500;
 }
 
@@ -245,6 +250,7 @@ input[type="file"] {
   flex-direction: column;
   align-items: center;
   text-align: center;
+  padding-top: 2rem;
 }
 
 .profile-view img {
@@ -268,54 +274,6 @@ input[type="file"] {
   border: 1px solid rgba(239, 68, 68, 0.9);
   border-radius: 8px;
   cursor: pointer;
-}
-
-/* Barre de navigation en bas */
-.bottom-nav {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 65px;
-  background: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(10px);
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  z-index: 100;
-}
-
-.nav-btn {
-  background: none;
-  border: none;
-  color: #9ca3af; /* Gris pour les inactifs */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  font-size: 1.5rem;
-  cursor: pointer;
-  transition: color 0.2s ease;
-}
-
-.nav-btn:hover { color: #fff; }
-.nav-btn.active { color: #fff; } /* Blanc pour l'actif */
-
-.nav-label {
-  font-size: 0.65rem;
-  margin-top: 2px;
-}
-
-.add-btn {
-  font-size: 2rem;
-  color: #fff;
-  background-color: #06b6d4;
-  border-radius: 12px;
-  width: 50px;
-  height: 40px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 /* Style de base pour les vues */

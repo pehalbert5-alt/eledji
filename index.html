@@ -7,40 +7,43 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div id="splash" class="splash">
-    <div class="splash-content">
-      <h1>Bienvenue sur KARTY</h1>
-      <button id="start-btn" class="start-btn">Commencer</button>
-    </div>
-  </div>
-
-  <main id="app" class="hidden">
-    <div class="registration-container">
-      <form id="registration-form">
-        <h2>Créer un compte</h2>
-        <div class="profile-pic-selector">
-          <label for="profile-pic-input">
-            <img id="profile-pic-preview" src="https://ssl.gstatic.com/images/branding/product/1x/avatar_circle_blue_120dp.png" alt="Aperçu de la photo de profil">
-            <span>Choisir une photo</span>
-          </label>
-          <input type="file" id="profile-pic-input" name="profile-pic" accept="image/*" class="hidden">
-        </div>
-        <div class="form-group">
-          <label for="username">Nom d'utilisateur</label>
-          <input type="text" id="username" name="username" placeholder="Votre pseudo" required>
-        </div>
-        <button type="submit" class="btn-primary">Continuer</button>
-        <div class="separator">
-          <span>OU</span>
-        </div>
-        <button type="button" id="google-signin-btn" class="btn-secondary">
-          Continuer avec Google</button>
-      </form>
-    </div>
-    <div id="main-content" class="hidden">
-      <!-- Mockup device to match design -->
+  <main id="app">
+    <!-- La maquette du téléphone est maintenant l'élément principal -->
+    <div id="main-content">
       <div class="device-mockup">
         <div class="phone">
+          <!-- L'écran de bienvenue est maintenant DANS le téléphone -->
+          <div id="splash" class="splash">
+            <div class="splash-content">
+              <h1>Bienvenue sur KARTY</h1>
+              <button id="start-btn" class="start-btn">Commencer</button>
+            </div>
+          </div>
+
+          <!-- Le formulaire est aussi DANS le téléphone -->
+          <div class="registration-container hidden">
+            <form id="registration-form">
+              <h2>Créer un compte</h2>
+              <div class="profile-pic-selector">
+                <label for="profile-pic-input">
+                  <img id="profile-pic-preview" src="https://ssl.gstatic.com/images/branding/product/1x/avatar_circle_blue_120dp.png" alt="Aperçu de la photo de profil">
+                  <span>Choisir une photo</span>
+                </label>
+                <input type="file" id="profile-pic-input" name="profile-pic" accept="image/*" class="hidden">
+              </div>
+              <div class="form-group">
+                <label for="username">Nom d'utilisateur</label>
+                <input type="text" id="username" name="username" placeholder="Votre pseudo" required>
+              </div>
+              <button type="submit" class="btn-primary">Continuer</button>
+              <div class="separator">
+                <span>OU</span>
+              </div>
+              <button type="button" id="google-signin-btn" class="btn-secondary">
+                Continuer avec Google</button>
+            </form>
+          </div>
+
           <header class="phone-header">
             <button class="back-btn">←</button>
             <div class="title">Eledji com.</div>
@@ -48,7 +51,7 @@
 
           <section class="phone-screen">
             <div id="home-view" class="view active">
-              <div class="media">
+              <div class="media hidden">
                 <img src="IMG-20250215-WA0090.jpg" alt="Contenu" />
                 <div class="right-actions">
                   <button class="action">♡</button>
@@ -58,20 +61,13 @@
               </div>
             </div>
 
-            <div id="discover-view" class="view hidden"><h2>Découvrir</h2></div>
-            <div id="messages-view" class="view hidden"><h2>Messages</h2></div>
+            <div id="discover-view" class="view hidden"><h2>Découvrir</h2><p>Contenu de la page Découvrir.</p></div>
+            <div id="messages-view" class="view hidden"><h2>Messages</h2><p>Contenu de la page des messages.</p></div>
             <div id="account-view" class="view hidden">
               <!-- Le profil de l'utilisateur sera injecté ici par JS -->
             </div>
           </section>
 
-          <nav id="device-bottom-nav" class="device-bottom-nav">
-            <button class="nav-btn" data-view="home-view">Accueil</button>
-            <button class="nav-btn" data-view="discover-view">Découvrir</button>
-            <button class="fab">+</button>
-            <button class="nav-btn" data-view="messages-view">Messages</button>
-            <button class="nav-btn" data-view="account-view">Compte</button>
-          </nav>
         </div>
       </div>
     </div>
