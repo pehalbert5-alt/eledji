@@ -138,6 +138,24 @@ window.addEventListener('DOMContentLoaded', () => {
   // Fermer le modal en cliquant sur l'arrière-plan
   addModal?.addEventListener('click', (e) => e.target === addModal && toggleModal());
 
+  // Gérer les actions du modal '+'
+  const publishBtn = document.getElementById('publish-btn');
+  const liveBtn = document.getElementById('live-btn');
+
+  if (publishBtn) {
+    publishBtn.addEventListener('click', () => {
+      alert("Ouverture de l'interface de publication...");
+      toggleModal(); // Ferme le modal
+    });
+  }
+
+  if (liveBtn) {
+    liveBtn.addEventListener('click', () => {
+      alert("Lancement de la fonctionnalité 'Live'...");
+      toggleModal(); // Ferme le modal
+    });
+  }
+
   // Gérer l'aperçu de la photo de profil
   if (profilePicInput && profilePicPreview) {
     profilePicInput.addEventListener('change', (event) => {
