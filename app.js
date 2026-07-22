@@ -84,32 +84,59 @@ window.addEventListener('DOMContentLoaded', () => {
     navigateTo('account-view'); // Afficher la vue du compte par défaut
   };
 
-  // --- Logique du flux vidéo ---
-  const videoObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      const video = entry.target;
-      if (entry.isIntersecting) {
-        video.play().catch(e => console.error("Erreur de lecture auto:", e));
-      } else {
-        video.pause();
-      }
-    });
-  }, { threshold: 0.5 }); // Se déclenche quand 50% de la vidéo est visible
+  /**
+   * Charge les publications depuis Firestore et les affiche dans le flux d'accueil.
+   */
+  async function loadHomeFeed() {
+    const homeView = document.getElementById('home-view');
+    if (!homeView) return;
 
-  document.querySelectorAll('.post-media').forEach(video => {
-    videoObserver.observe(video);
-    // Activer/désactiver le son au clic
-    video.addEventListener('click', () => {
-      video.muted = !video.muted;
-    });
-  });
+    homeView.innerHTML = ''; // Vider le contenu précédent
 
-  document.querySelectorAll('.like-btn').forEach(btn => {
-    btn.addEventListener('click', () => alert('Vous avez aimé cette publication !'));
-  });
-  document.querySelectorAll('.comment-btn').forEach(btn => {
-    btn.addEventListener('click', () => alert('Ouverture des commentaires...'));
-  });
+    const postsSnapshot = await db.collection('posts').orderBy('createdAt', 'desc').get();
+    
+    postsSnapshot.forEach(doc => {
+      const post = doc.data();
+      const postCard = document.createElement('div');
+      postCard.className = 'post-card';
+      postCard.innerHTML = `
+        <video class="post-media" src="${post.videoUrl}" loop playsinline></video>
+        <div class="post-actions">
+          <button class="action-btn like-btn">❤️</button>
+          <button class="action-btn comment-btn">💬</button>
+        </div>
+      `;
+      homeView.appendChild(postCard);
+    });
+
+    // Ré-attacher les écouteurs d'événements et les observateurs
+    setupFeedInteractions();
+  }
+
+  /**
+   * Configure les interactions pour le flux vidéo (lecture auto, likes, etc.).
+   */
+  function setupFeedInteractions() {
+    const videoObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        const video = entry.target;
+        if (entry.isIntersecting) {
+          video.play().catch(e => console.error("Erreur de lecture auto:", e));
+        } else {
+          video.pause();
+        }
+      });
+    }, { threshold: 0.5 });
+
+    document.querySelectorAll('.post-media').forEach(video => {
+      videoObserver.observe(video);
+      video.addEventListener('click', () => { video.muted = !video.muted; });
+    });
+
+    document.querySelectorAll('.like-btn').forEach(btn => btn.addEventListener('click', () => alert('Vous avez aimé !')));
+    document.querySelectorAll('.comment-btn').forEach(btn => btn.addEventListener('click', () => alert('Commentaires...')));
+  }
+
   /**
    * Gère la navigation entre les vues.
    * @param {string} viewId L'ID de la vue à afficher.
@@ -118,6 +145,7 @@ window.addEventListener('DOMContentLoaded', () => {
     // Gérer le padding pour le mode plein écran
     if (viewId === 'home-view') {
       appMain.style.padding = '0';
+      loadHomeFeed(); // Charger le flux quand on va sur l'accueil
     } else {
       // Rétablir le padding pour les autres vues
       appMain.style.padding = '2rem 2rem 80px 2rem';
